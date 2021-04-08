@@ -1,14 +1,18 @@
+@import 'main-colors';
+
 #Menu {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 180px;
 
-  background-color: lightgrey;
   padding: 1rem;
   position: sticky;
   top: 0;
 
+  background-color: $secondary-theme-color;
+  color: $base-text-color;
+  
   #lower-menu {
     margin-top: auto;
   }
