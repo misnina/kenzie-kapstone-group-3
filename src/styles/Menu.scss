@@ -1,0 +1,15 @@
+#Menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 180px;
+
+  background-color: lightgrey;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+
+  #lower-menu {
+    margin-top: auto;
+  }
+}
