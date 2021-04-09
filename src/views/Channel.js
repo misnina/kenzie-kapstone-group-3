@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import ChatBar from '../components/ChatBar'
 import Message from '../components/Message';
+import { getChannelMessages, postMessage, deleteMessage } from '../fetchRequests';
 
-import { getChannelMessages, postMessage } from '../fetchRequests';
+import '../styles/Channel.scss';
 
 let messageid = 2;
 
 export default function Channel(props) {
-  const [messages, setMessages] = useState([]);
+  const [ channel, setChannel ] = useState(null);
 
   useEffect(() => {
     getChannelMessages('public', 0).then(data => {
       if (!data) return;
-      setMessages(data);
+      setChannel(data);
     })
 
 
@@ -23,33 +24,27 @@ export default function Channel(props) {
 
     postMessage('public', 0, userid, text)
     .then(data => {
-      console.log(data.messages);
-      setMessages(data.messages);
+      setChannel(data);
     })
+  }
 
-    // const newMessage = {
-    //   id: messageid,
-    //   author: userid,
-    //   createdAt: Date.now(),
-    //   updatedAt: Date.now(),
-    //   text
-    // }
-    // messageid++;
-    // setMessages(state => {
-    //   return [
-    //     ...state,
-    //     newMessage
-    //   ]
-    // })
+  function handleDelete(event, messageid) {
+    event.preventDefault();
+    deleteMessage('public', channel.id, messageid)
+    .then(data => {
+      console.log(data);
+      setChannel(data);
+    })
   }
 
   return (
     <div className="channel">
       <div className="messages">
-        {messages && messages.map(message => {
+        {channel && channel.messages.map(message => {
           return <Message
           message={message}
           key={`message-${message.id}`}
+          handleDelete={handleDelete}
         />
         })}
       </div>
