@@ -1,4 +1,11 @@
+@import './main-colors.scss'; 
+
 .message {
+  width: 200px;
+  padding: 10px;
+  margin: 10px;
+  
+  background-color: $secondary-theme-color;
   display: flex;
   justify-content: center;
 }
