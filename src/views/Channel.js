@@ -2,46 +2,15 @@ import React, { useEffect, useState } from 'react'
 import ChatBar from '../components/ChatBar'
 import Message from '../components/Message';
 
-import { getChannelMessages, postMessage } from '../fetchRequests';
+import { useStore } from '../store/store.js'
 
 let messageid = 2;
 
-export default function Channel(props) {
-  const [messages, setMessages] = useState([]);
+export default function Channel() {
+  const messages = useStore((state) => state.messages);
+  const setMessages = useStore((state) => state.setMessages);
 
-  useEffect(() => {
-    getChannelMessages('public', 0).then(data => {
-      if (!data) return;
-      setMessages(data);
-    })
-
-
-  }, [])
-
-  function createNewMessage(event, userid, text) {
-    event.preventDefault();
-
-    postMessage('public', 0, userid, text)
-    .then(data => {
-      console.log(data.messages);
-      setMessages(data.messages);
-    })
-
-    // const newMessage = {
-    //   id: messageid,
-    //   author: userid,
-    //   createdAt: Date.now(),
-    //   updatedAt: Date.now(),
-    //   text
-    // }
-    // messageid++;
-    // setMessages(state => {
-    //   return [
-    //     ...state,
-    //     newMessage
-    //   ]
-    // })
-  }
+  console.log(`Messages from channel: ${messages}`)
 
   return (
     <div className="channel">
@@ -53,9 +22,7 @@ export default function Channel(props) {
         />
         })}
       </div>
-      <ChatBar
-        createNewMessage={createNewMessage}
-      />
+      <ChatBar />
     </div>
   )
 }

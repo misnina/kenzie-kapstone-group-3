@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Message(props) {
+export default function Message({ message }) {
   return (
     <div className="message">
-      {props.message.text}
+      {message}
     </div>
   )
 }
