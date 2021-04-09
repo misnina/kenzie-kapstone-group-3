@@ -9,21 +9,23 @@ export default function ChatBar(props) {
 
   return (
     <div className="chat-bar">
-      <input 
-        value={message}
-        onChange={handleReply}
-      />
-      <button onClick={
-        (e) => {
-          if (message !== '') {
-            props.createNewMessage(e, 0, message);
-            setMessage('');
-          } else {
-            //say it wasn't submitted
+      <form onSubmit={
+        (event) => {
+            event.preventDefault();
+            if (message !== '') {
+              props.createNewMessage(event, 0, message);
+              setMessage('');
+            } else {
+              //say it wasn't submitted
+            }
           }
-        }
-      }
-      >submit</button>
+      }>
+        <input 
+          value={message}
+          onChange={handleReply}
+        />
+        <button type="submit">submit</button>
+      </form>
     </div>
   )
 }

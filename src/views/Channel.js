@@ -21,7 +21,6 @@ export default function Channel(props) {
 
   function createNewMessage(event, userid, text) {
     event.preventDefault();
-
     postMessage('public', 0, userid, text)
     .then(data => {
       setChannel(data);
