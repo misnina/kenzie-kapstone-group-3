@@ -9,7 +9,7 @@ export default function ChatBar(props) {
   }
 
   function sendMessage(event) {
-    socket.emit('new-message', message)
+    socket.emit('new-message', { name: 'general', message: message })
   }
 
   return (

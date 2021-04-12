@@ -3,14 +3,13 @@ import ChatBar from '../components/ChatBar'
 import Message from '../components/Message';
 
 import { useStore } from '../store/store.js'
+import { socket } from '../service/socket.js'
 
 let messageid = 2;
 
 export default function Channel() {
   const messages = useStore((state) => state.messages);
   const setMessages = useStore((state) => state.setMessages);
-
-  console.log(`Messages from channel: ${messages}`)
 
   return (
     <div className="channel">

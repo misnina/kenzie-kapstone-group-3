@@ -19,6 +19,7 @@ function App() {
 
   useEffect(() => {
     socket.on('connect', () => {
+      socket.emit('join-channel', 'general')
       console.log("Connection made to server")
     });
 
