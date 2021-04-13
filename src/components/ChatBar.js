@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { socket } from '../service/socket';
 
-export default function ChatBar(props) {
+export default function ChatBar({ name }) {
   const [message, setMessage] = useState('');
 
   function handleChange(e) {
@@ -9,7 +9,7 @@ export default function ChatBar(props) {
   }
 
   function sendMessage(event) {
-    socket.emit('new-message', { name: 'general', message: message })
+    socket.emit('new-message', { name: name, message: message });
   }
 
   return (

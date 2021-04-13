@@ -16,6 +16,10 @@ export default function Channel({ name }) {
     }
   }, []);
 
+  useEffect(() => {
+    
+  }, [messages])
+
   return (
     <div className="channel">
       <div className="messages">
@@ -26,7 +30,7 @@ export default function Channel({ name }) {
         />
         })}
       </div>
-      <ChatBar />
+      <ChatBar name={name} />
     </div>
   )
 }

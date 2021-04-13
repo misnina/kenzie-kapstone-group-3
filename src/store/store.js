@@ -5,7 +5,7 @@ export const useStore = create(devtools((set) => ({
   users: [],
   setUsers: (updatedUsers) => set({ users: updatedUsers }),
 
-  messages: ['william'],
+  messages: [],
   setMessages: (updatedMessages) => set({ messages: updatedMessages }),
 
   currentuser: { username: '', token: '' },

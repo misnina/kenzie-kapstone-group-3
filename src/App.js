@@ -1,7 +1,11 @@
+import { Route, Switch } from 'react-router';
 import { useEffect } from "react";
 import Menu from "./components/Menu";
 import './styles/App.scss';
+
 import Channel from "./views/Channel";
+import Home from './views/Home';
+import Profile from './views/Profile';
 
 import { SocketContext, socket } from './service/socket.js';
 
@@ -14,12 +18,11 @@ function App() {
 
   const setUsers = useStore((state) => state.setUsers);
 
-  const statemessages = useStore((state) => state.messages);
+  const messages = useStore((state) => state.messages);
   const setMessages = useStore((state) => state.setMessages);
 
   useEffect(() => {
     socket.on('connect', () => {
-      socket.emit('join-channel', 'general')
       console.log("Connection made to server")
     });
 
@@ -33,10 +36,12 @@ function App() {
     socket.on('update-user', (users) => setUsers(users));
     socket.on('add-friend', (users) => setUsers(users));
 
-    socket.on('new-message', (messages) => {
-      console.log(messages)
+    socket.on('new-message', (message) => {
+      setMessages([...messages, message]);
+    });
+
+    socket.on('get-messages', (messages) => {
       setMessages(messages);
-      console.log(statemessages)
     });
 
 
@@ -54,7 +59,14 @@ function App() {
       <Menu />
       <div id="main-area">
         <SocketContext.Provider value={socket}>
-          <Channel />
+          <Switch>
+            <Route path="/profile" component={Profile} />
+            <Route path="/general" render={() => ( <Channel name='general' /> )} />
+            <Route path="/books" render={() => ( <Channel name='books' /> )} />
+            <Route path="/tv" render={() => ( <Channel name='tv' /> )} />
+            <Route path="/gaming" render={() => ( <Channel name='gaming' /> )} />
+            <Route exact path="/" component={Home} />
+          </Switch>
         </SocketContext.Provider>
       </div>
     </div>
