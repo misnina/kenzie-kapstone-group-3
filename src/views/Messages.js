@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Gaming() {
+export default function Messages() {
   return (
     <div>
-      gaming
+      
     </div>
   )
 }
