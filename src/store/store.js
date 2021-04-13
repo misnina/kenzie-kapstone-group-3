@@ -1,11 +1,15 @@
 import create from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { devtools, persist } from 'zustand/middleware';
 
-const useStore = (set) => ({
+export const useStore = create(devtools((set) => ({
+  users: [],
+  setUsers: (updatedUsers) => set({ users: updatedUsers }),
+
+  messages: [],
+  setMessages: (updatedMessages) => set({ messages: updatedMessages }),
+
   currentuser: { username: '', token: '' },
   setUser: (user) => {
     //something
   }
-});
-
-export default create(devtools(useStore));
+})));

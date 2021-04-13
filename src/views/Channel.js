@@ -1,40 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import ChatBar from '../components/ChatBar'
 import Message from '../components/Message';
 import { getChannelMessages, postMessage, deleteMessage } from '../fetchRequests';
 
 import '../styles/Channel.scss';
 
-let messageid = 2;
+import { useStore } from '../store/store.js'
+import { socket } from '../service/socket.js'
 
-export default function Channel(props) {
-  const [ channel, setChannel ] = useState(null);
-
+export default function Channel({ name }) {
+  const messages = useStore((state) => state.messages);
+  
   useEffect(() => {
-    getChannelMessages('public', 0).then(data => {
-      if (!data) return;
-      setChannel(data);
-    })
+    socket.emit('join-channel', name)
 
-
-  }, [])
-
-  function createNewMessage(event, userid, text) {
-    event.preventDefault();
-    postMessage('public', 0, userid, text)
-    .then(data => {
-      setChannel(data);
-    })
-  }
-
-  function handleDelete(event, messageid) {
-    event.preventDefault();
-    deleteMessage('public', channel.id, messageid)
-    .then(data => {
-      console.log(data);
-      setChannel(data);
-    })
-  }
+    return () => {
+      socket.emit('leave-channel', name)
+    }
+  }, []);
 
   return (
     <div className="channel">
@@ -47,9 +30,7 @@ export default function Channel(props) {
         />
         })}
       </div>
-      <ChatBar
-        createNewMessage={createNewMessage}
-      />
+      <ChatBar name={name} />
     </div>
   )
 }

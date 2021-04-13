@@ -1,31 +1,21 @@
 import React, { useState } from 'react'
+import { socket } from '../service/socket';
 
-export default function ChatBar(props) {
+export default function ChatBar({ name }) {
   const [message, setMessage] = useState('');
 
-  function handleReply(e) {
+  function handleChange(e) {
     setMessage(e.target.value);
+  }
+
+  function sendMessage(event) {
+    socket.emit('new-message', { name: name, message: message });
   }
 
   return (
     <div className="chat-bar">
-      <form onSubmit={
-        (event) => {
-            event.preventDefault();
-            if (message !== '') {
-              props.createNewMessage(event, 0, message);
-              setMessage('');
-            } else {
-              //say it wasn't submitted
-            }
-          }
-      }>
-        <input 
-          value={message}
-          onChange={handleReply}
-        />
-        <button type="submit">submit</button>
-      </form>
+      <input onChange={handleChange}/>
+      <button onClick={(e) => sendMessage()}>Send</button>
     </div>
   )
 }
