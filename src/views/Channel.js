@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import ChatBar from '../components/ChatBar'
 import Message from '../components/Message';
 
 import { useStore } from '../store/store.js'
 import { socket } from '../service/socket.js'
 
-let messageid = 2;
-
-export default function Channel() {
+export default function Channel({ name }) {
   const messages = useStore((state) => state.messages);
-  const setMessages = useStore((state) => state.setMessages);
+  
+  useEffect(() => {
+    socket.emit('join-channel', name)
+
+    return () => {
+      socket.emit('leave-channel', name)
+    }
+  }, []);
 
   return (
     <div className="channel">
