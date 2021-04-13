@@ -11,14 +11,6 @@ import { SocketContext, socket } from './service/socket.js';
 
 import { useStore } from './store/store.js'
 
-import Home from './views/Home';
-import Profile from './views/Profile';
-import Message from './views/Messages';
-import General from './views/General';
-import Books from './views/Books';
-import Tv from './views/Tv';
-import Gaming from './views/Gaming';
-
 
 function App() {
 

@@ -9,6 +9,8 @@ export default function ChatBar({ name }) {
   }
 
   function sendMessage(event) {
+    console.log('sending message');
+    console.log(name);
     socket.emit('new-message', { name: name, message: message });
   }
 

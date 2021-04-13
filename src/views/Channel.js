@@ -19,14 +19,15 @@ export default function Channel({ name }) {
     }
   }, []);
 
+  console.log(messages);
+  //make a message key in backend later
   return (
     <div className="channel">
       <div className="messages">
-        {channel && channel.messages.map(message => {
+        {messages && messages.map((message, i) => {
           return <Message
           message={message}
-          key={`message-${message.id}`}
-          handleDelete={handleDelete}
+          key={`message-${i}`}
         />
         })}
       </div>
