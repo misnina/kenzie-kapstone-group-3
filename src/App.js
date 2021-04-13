@@ -1,9 +1,5 @@
 import { Route, Switch } from 'react-router';
-<<<<<<< HEAD
-
-=======
 import { useEffect } from "react";
->>>>>>> origin/frontend-socketio-port
 import Menu from "./components/Menu";
 import './styles/App.scss';
 
