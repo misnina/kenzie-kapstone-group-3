@@ -16,4 +16,9 @@
   #lower-menu {
     margin-top: auto;
   }
+
+  .link-list {
+    display: flex;
+    flex-direction: column;
+  }
 }
