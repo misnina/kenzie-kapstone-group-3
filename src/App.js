@@ -1,4 +1,4 @@
-import { Route, Switch } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
 import { useEffect } from "react";
 import Menu from "./components/Menu";
 import './styles/App.scss';
