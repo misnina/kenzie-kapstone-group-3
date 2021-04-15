@@ -38,11 +38,13 @@ function App() {
     socket.on('add-friend', (users) => setUsers(users));
 
     socket.on('new-message', (message) => {
+      console.log(messages, 'before');
       setMessages([...messages, message]);
+      console.log(messages, 'after');
     });
 
-    socket.on('get-messages', (messages) => {
-      setMessages(messages);
+    socket.on('get-messages', (newMessages) => {
+      setMessages(newMessages);
     });
 
 
@@ -51,10 +53,7 @@ function App() {
     }
   }, []);
 
-  function sendMessage(message) {
-    socket.emit('new-message', message)
-  }
-
+  console.log(messages, 'when page loads');
   return (
     <div id="App">
       <Menu />

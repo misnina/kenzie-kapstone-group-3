@@ -1,7 +1,7 @@
 import create from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
-export const useStore = create(devtools((set) => ({
+export const useStore = create(devtools(((set) => ({
   users: [],
   setUsers: (updatedUsers) => set({ users: updatedUsers }),
 
@@ -12,4 +12,4 @@ export const useStore = create(devtools((set) => ({
   setUser: (user) => {
     //something
   }
-})));
+}))));

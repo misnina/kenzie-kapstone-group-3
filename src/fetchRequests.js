@@ -1,7 +1,7 @@
-const baseURL = 'http://localhost:3000/';
+const baseURL = 'http://localhost:4000/';
 
-export const getChannelMessages = (access, channelid) => {
-  return fetch(baseURL + `channels/${access}/${channelid}/messages`)
+export const getChannelMessages = (channelName) => {
+  return fetch(baseURL + `${channelName}/messages`)
   .then(res => res.json())
   .catch(err => console.log(err));
 }
