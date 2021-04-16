@@ -16,8 +16,8 @@ export default function Menu() {
         <h2>Chatrooms</h2>
         <div className='link-list'>
           <Link to="/general">General</Link>
-          <Link to="/books">Books</Link>
-          <Link to="/tv">Tv</Link>
+          <Link to="/books">Books & TV</Link>
+
           <Link to="/gaming">Gaming</Link>
         </div>
         <button>Logout</button>
