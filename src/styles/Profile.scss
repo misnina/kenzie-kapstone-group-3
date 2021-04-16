@@ -10,14 +10,10 @@
   align-items: center;
 
   .card {
-    display: flex;
-    flex-direction: column;
-    margin: 40px;
     width: 60vw;
     height: 400px;
-    background-color: $secondary-theme-color;
-    box-shadow: $shadow;
-    border-radius: 25px;
+    margin: 40px;
+    @include cards;
   }
 }
 
