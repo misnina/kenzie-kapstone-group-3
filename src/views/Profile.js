@@ -20,7 +20,7 @@ const mockUser = {
     age: 19,
     birthday: Date.now(),
     location: 'HelloVille',
-    about: 'My friends are great!',
+    about: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
   },
   friends: [
     0,
@@ -35,16 +35,17 @@ const mockUser = {
 }
 
 export default function Profile({ user }) {
-  const {age, birthday, location} = mockUser.profile;
+  const {age, birthday, location, about} = mockUser.profile;
   const bioinfoString = `${age ? `${age} ||` : ''} ${birthday ? `${moment(birthday).format("MMM Do YY")} ||` : ''} ${location ? location : ''}`;
   console.log(bioinfoString);
 
   return (
     <div id='Profile'>
-      <div className='card'>
+      <div className='card profile-card'>
+
         <div className='profile-heading'>
           <div className='profile-heading-left'>
-            <Avatar size={150} name={mockUser.username} photoURL={mockUser.photoURL}/>
+            <Avatar size={100} name={mockUser.username} photoURL={mockUser.photoURL}/>
             <div className='bio'>
               <h1>
                 {mockUser.username}
@@ -54,7 +55,21 @@ export default function Profile({ user }) {
               </div>
             </div>
           </div>
+
+          <div className='profile-heading-right'>
+            <h2>Friends List</h2>
+            <div className='temp-group'>
+              <Avatar photoURL={friendPhotoURL01}/>
+              <Avatar photoURL={friendPhotoURL02}/>
+            </div>
+          </div>
         </div>
+
+        <div className='about'>
+          <h1>about</h1>
+          <p>{about}</p>
+        </div>
+
       </div>
     </div>
   )
