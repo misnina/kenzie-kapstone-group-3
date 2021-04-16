@@ -16,10 +16,11 @@ export default function Channel({ name }) {
   
   useEffect(() => {
     socket.emit('join-channel', name);
+    socket.emit('get-messages', name);
     return () => {
       socket.emit('leave-channel', name)
     }
-  }, []);
+  }, [name]);
 
   //make a message key in backend later
   return (

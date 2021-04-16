@@ -12,15 +12,14 @@ export default function ChatBar({ name }) {
   }
 
   function sendMessage(event) {
-    console.log(messages);
     socket.emit('new-message', { name: name, message: message });
     socket.emit('get-messages', name);
-    console.log(messages);
+    setMessage('');
   }
 
   return (
     <div className="chat-bar">
-      <input onChange={handleChange}/>
+      <input value={message} onChange={handleChange}/>
       <button onClick={(e) => sendMessage()}>Send</button>
     </div>
   )

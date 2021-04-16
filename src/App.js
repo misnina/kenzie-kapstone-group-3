@@ -63,7 +63,6 @@ function App() {
             <Route path="/profile" component={Profile} />
             <Route path="/general" render={() => ( <Channel name='general' /> )} />
             <Route path="/books" render={() => ( <Channel name='books' /> )} />
-            <Route path="/tv" render={() => ( <Channel name='tv' /> )} />
             <Route path="/gaming" render={() => ( <Channel name='gaming' /> )} />
             <Route exact path="/" component={Home} />
           </Switch>
