@@ -1,0 +1,39 @@
+@import './main-colors';
+@import './utils';
+
+#Profile {
+  color: $base-text-color;
+  display: flex;
+  justify-content: center;
+
+  .card {
+    margin: 40px;
+    width: 60vw;
+    height: 60vh;
+    background-color: $secondary-theme-color;
+    box-shadow: $shadow;
+    border-radius: 25px;
+  }
+}
+
+.profile-heading {
+  display: flex;
+  flex-direction: row;
+
+  .profile-heading-left {
+    display: flex;
+    align-items: center;
+    
+    h1 {
+      font-size: 45px;
+      color: $primary-theme-color;
+      margin: 0;
+      margin-bottom: 10px;
+      text-align: left;
+    }
+    .avatar {
+      margin: 30px;
+      box-shadow: $shadow;
+    }
+  }
+}
