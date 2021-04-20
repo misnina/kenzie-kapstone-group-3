@@ -8,8 +8,6 @@ export const useStore = create(devtools(((set) => ({
   messages: [],
   setMessages: (updatedMessages) => set({ messages: updatedMessages }),
 
-  currentuser: { username: '', token: '' },
-  setUser: (user) => {
-    //something
-  }
+  currentUser: { username: '', token: '' },
+  setCurrentUser: (user, token) => set({ currentuser: { username: user.username, token} }),
 }))));

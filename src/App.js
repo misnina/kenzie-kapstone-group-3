@@ -16,6 +16,8 @@ function App() {
 
   // const socketRef = useRef();
   // socket = 
+  const currentUser = useStore((state) => state.currentuser);
+  const setCurrentUser = useStore((state) => state.setCurrentUser);
 
   const setUsers = useStore((state) => state.setUsers);
 
@@ -32,6 +34,7 @@ function App() {
       socket.removeAllListeners();
     });
 
+    socket.on('login', ({user, token}) => setCurrentUser(user, token));
     socket.on('new-user', (users) => setUsers(users));
     socket.on('delete-user', (users) => setUsers(users));
     socket.on('update-user', (users) => setUsers(users));
@@ -54,6 +57,7 @@ function App() {
   }, []);
 
   console.log(messages, 'when page loads');
+  console.log(currentUser);
   return (
     <div id="App">
       <Menu />
