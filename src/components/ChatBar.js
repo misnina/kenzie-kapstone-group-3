@@ -1,19 +1,22 @@
 import React, { useState } from 'react'
 import { socket } from '../service/socket';
-import { useStore } from '../store/store';
+import { useStore } from '../store/store.js';
 
 
 export default function ChatBar({ name }) {
   const [message, setMessage] = useState('');
-  const messages = useStore(state => state.messages);
+  const currentUser = useStore(state => state.currentUser)
+  //passing down through props is the only workaround I can think of
 
   function handleChange(e) {
     setMessage(e.target.value);
   }
 
   function sendMessage(event) {
-    socket.emit('new-message', { name: name, message: message });
-    socket.emit('get-messages', name);
+    console.log(currentUser);
+    console.log(name);
+    socket.emit('new-message', { channelName: name, message: message, user: currentUser});
+    //socket.emit('get-messages', name);
     setMessage('');
   }
 
