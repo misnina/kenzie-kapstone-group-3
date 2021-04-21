@@ -2,14 +2,17 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import '../styles/Menu.scss';
 
+import { useStore } from '../store/store';
+
 export default function Menu() {
+  const isLoggedIn = useStore(state => state.isLoggedIn);
+
   return (
     <div id="Menu">
       <h1>squirl</h1>
       <div id="top-menu">
         <div className='link-list'>
-          <Link to="/profile">Profile</Link>
-          <Link to="/">Home</Link>
+          {isLoggedIn ? <Link to="/">Profile</Link> : <Link to="/">Home</Link>}
         </div>
       </div>
        <div id="lower-menu">

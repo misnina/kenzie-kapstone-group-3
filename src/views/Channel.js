@@ -6,9 +6,6 @@ import { getChannelMessages } from '../fetchRequests';
 import { useStore } from '../store/store.js'
 import { socket } from '../service/socket.js'
 
-//temporary
-import { nanoid } from 'nanoid';
-
 import '../styles/Channel.scss';
 
 export default function Channel({ name }) {
@@ -23,13 +20,16 @@ export default function Channel({ name }) {
   }, [name]);
 
   //make a message key in backend later
+  console.log(messages);
   return (
     <div className="channel">
       <div className="messages">
         {messages && messages.map(message => {
+          console.log(message.author);
           return (<Message
-          message={message}
-          key={`message-${nanoid()}`}
+          authorid={message.author}
+          message={message.text}
+          key={`message-${message._id}`}
         />)
         })}
       </div>

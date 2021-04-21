@@ -8,6 +8,9 @@ export const useStore = create(devtools(((set) => ({
   messages: [],
   setMessages: (updatedMessages) => set({ messages: updatedMessages }),
 
-  currentUser: { username: '', token: '' },
-  setCurrentUser: (user, token) => set({ currentuser: { username: user.username, token} }),
+  isLoggedIn: false,
+  toggleLogin: (prevState) => set({isLoggedIn: !prevState}),
+
+  currentUser: { username: '', id: ''},
+  setCurrentUser: (user) => set({ currentUser: { username: user.username, id: user._id } }),
 }))));

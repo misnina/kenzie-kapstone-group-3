@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import { socket } from '../service/socket';
+import { useStore } from '../store/store';
 
 export default function Home() {
+  const user = useStore(state => state.user);
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -9,8 +12,8 @@ export default function Home() {
     event.preventDefault();
     if (!username || !password) return;
 
-    console.log('whoops');
-    socket.emit('login', username, password);
+    console.log('loggin in');
+    socket.emit('login', { username: username, password: password });
   }
 
   return (

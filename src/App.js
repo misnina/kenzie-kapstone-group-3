@@ -14,10 +14,11 @@ import { useStore } from './store/store.js'
 
 function App() {
 
-  // const socketRef = useRef();
-  // socket = 
   const currentUser = useStore((state) => state.currentuser);
   const setCurrentUser = useStore((state) => state.setCurrentUser);
+
+  const isLoggedIn = useStore((state) => state.isLoggedIn);
+  const toggleLogin = useStore((state) => state.toggleLogin);
 
   const setUsers = useStore((state) => state.setUsers);
 
@@ -34,41 +35,76 @@ function App() {
       socket.removeAllListeners();
     });
 
-    socket.on('login', ({user, token}) => setCurrentUser(user, token));
+    socket.on('login', (user) => {
+      console.log(user);
+      setCurrentUser(user);
+      if (!isLoggedIn) {
+        toggleLogin(isLoggedIn);
+      }
+      console.log('afterlogin', currentUser);
+    });
+
+    socket.on('logout', () => {
+      setCurrentUser({username: ''});
+      if (isLoggedIn) {
+        toggleLogin(isLoggedIn);
+      }
+    })
+
     socket.on('new-user', (users) => setUsers(users));
     socket.on('delete-user', (users) => setUsers(users));
     socket.on('update-user', (users) => setUsers(users));
     socket.on('add-friend', (users) => setUsers(users));
 
-    socket.on('new-message', (message) => {
-      console.log(messages, 'before');
-      setMessages([...messages, message]);
-      console.log(messages, 'after');
+    socket.on('new-message', (messages) => {
+      // const cloneMessages = [...messages];
+      // cloneMessages.push(message);
+      console.log(messages);
+      setMessages(messages);
     });
 
     socket.on('get-messages', (newMessages) => {
       setMessages(newMessages);
     });
 
-
+    socket.on('toast-error', (message) => {
+      console.log(message);
+    })
     return () => {
-      socket.off()
+      socket.off('get-messages');
+      socket.off('new-messages');
+      socket.off('login');
+      socket.off('logout');
     }
   }, []);
 
-  console.log(messages, 'when page loads');
-  console.log(currentUser);
   return (
     <div id="App">
       <Menu />
       <div id="main-area">
         <SocketContext.Provider value={socket}>
           <Switch>
-            <Route path="/profile" component={Profile} />
-            <Route path="/general" render={() => ( <Channel name='general' /> )} />
-            <Route path="/books" render={() => ( <Channel name='books' /> )} />
-            <Route path="/gaming" render={() => ( <Channel name='gaming' /> )} />
-            <Route exact path="/" component={Home} />
+
+
+            <Route 
+              path="/general" 
+              render={() => ( <Channel name='general' currentUser={currentUser} /> )}
+            />
+            <Route 
+              path="/books" 
+              render={() => ( <Channel name='books' /> )}
+            />
+            <Route 
+              path="/gaming" 
+              render={() => ( <Channel name='gaming' /> )}
+            />
+
+            {!isLoggedIn ? 
+              <Route exact path="/" component={Home} />
+            : <Route 
+              path="/"
+              component={Profile}
+            />}
           </Switch>
         </SocketContext.Provider>
       </div>
