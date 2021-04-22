@@ -36,7 +36,7 @@ export default function Channel({ name }) {
       <div className="messages">
         {messages && messages.slice(-30).map((message, i) => {
           return (<Message
-          authorid={message.author}
+          author={message.author}
           message={message.text}
           key={`message-${message._id}`}
         />)

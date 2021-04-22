@@ -14,28 +14,7 @@ const friendPhotoURL01 = 'https://i.imgur.com/AmfgQV1.png';
 const friendPhotoURL02 = 'https://i.imgur.com/6FRVdHg.png';
 
 const mockUser = {
-  id: 1,
-  username: 'buddyGuy',
-  password: 'secret',
-  createdAt: Date.now(),
-  updatedAt: Date.now(),
   photoURL: 'https://i.imgur.com/uvrVHI1.png',
-  profile: {
-    age: 19,
-    birthday: Date.now(),
-    location: 'HelloVille',
-    about: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-  },
-  friends: [
-    0,
-    2,
-  ],
-  private_channels: [
-  ],
-  public_channels: [
-    0,
-    1
-  ]
 }
 
 export default function Profile() {
@@ -135,7 +114,7 @@ export default function Profile() {
           <h1>Profile</h1>
           <div className="profile-form">
             Age: <input type="number" value={formAge} onChange={e => setAge(e.target.value)}/>
-            Birthday: <input type="date" value={formBirthday} defaultValie={formBirthday} onChange={e => setBirthday(e.target.value)}/>
+            Birthday: <input type="date" value={formBirthday} defaultValue={formBirthday} onChange={e => setBirthday(e.target.value)}/>
             Location: <input value={formLocation} onChange={e => setLocation(e.target.value)}/>
             About <textarea value={formAbout} onChange={e => setAbout(e.target.value)}/>
           </div>

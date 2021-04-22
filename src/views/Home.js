@@ -21,7 +21,8 @@ export default function Home() {
   const handleSignUp = (event) => {
     event.preventDefault();
     console.log('thing');
-    if (!username || !password) return;
+    if (!signUsername || !signPassword) return;
+
 
     socket.emit('new-user', { username: signUsername,
     password: signPassword });
