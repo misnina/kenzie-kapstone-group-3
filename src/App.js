@@ -52,14 +52,16 @@ function App() {
     });
 
     socket.on('logout', () => {
-      console.log('test')
       setCurrentUser({username: '', id: ''});
       if (isLoggedIn) {
         toggleLogin(isLoggedIn);
       }
     })
 
-    socket.on('new-user', (users) => setUsers(users));
+    socket.on('new-user', (users) => {
+      setUsers(users);
+      console.log('new user');
+    });
     socket.on('delete-user', (users) => setUsers(users));
     socket.on('update-user', (users) => setUsers(users));
     socket.on('add-friend', (users) => setUsers(users));
@@ -86,6 +88,20 @@ function App() {
   const handleClose = () => {
     setErrorMessage('');
   }
+  
+  //https://stackoverflow.com/questions/50026028/react-how-to-detect-page-refresh-f5
+  //This is so the user does not get stuck on the profile page with no home, kinda half logged in
+  useEffect(() => {
+    window.addEventListener("beforeunload", logout);
+    return () => {
+      window.removeEventListener("beforeunload", logout);
+    };
+  }, []);
+
+  const logout = () => {
+    socket.emit('logout');
+  }
+
 
   return (
     <div id="App">

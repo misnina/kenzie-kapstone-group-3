@@ -11,8 +11,19 @@ export const useStore = create(devtools(((set) => ({
   isLoggedIn: false,
   toggleLogin: (prevState) => set({isLoggedIn: !prevState}),
 
-  currentUser: { username: '', id: ''},
-  setCurrentUser: (user) => set({ currentUser: { username: user.username, id: user._id } }),
+  currentUser: { 
+    _id: '',
+    username: '',
+    password: '',
+    profile: {
+      age: '',
+      birthday: '',
+      location: '',
+      about: '',
+    },
+    friends: []
+  },
+  setCurrentUser: (user) => set({ currentUser: user }),
 
   errorMessage: '',
   setErrorMessage: (newMessage) => set({ errorMessage: newMessage }),

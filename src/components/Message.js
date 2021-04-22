@@ -3,7 +3,7 @@ import '../styles/Message.scss';
 import { getUser } from '../fetchRequests';
 
 export default function Message({ message, authorid }) {
-  const [author, setAuthor] = useState({username: 'Loading...', id: authorid});
+  const [author, setAuthor] = useState({username: 'Loading...', _id: authorid});
 
   useEffect(() => {
     const authorLookup = authorid ? authorid.toString() : '';
