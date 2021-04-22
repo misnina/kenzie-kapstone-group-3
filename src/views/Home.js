@@ -12,7 +12,6 @@ export default function Home() {
     event.preventDefault();
     if (!username || !password) return;
 
-    console.log('loggin in');
     socket.emit('login', { username: username, password: password });
   }
 
@@ -24,6 +23,7 @@ export default function Home() {
           onChange={e => setUsername(e.target.value)}
         />
         Password: <input 
+          type='password'
           value={password}
           onChange={e => setPassword(e.target.value)}
         />

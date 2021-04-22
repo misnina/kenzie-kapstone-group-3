@@ -6,12 +6,9 @@ export default function Message({ message, authorid }) {
   const [author, setAuthor] = useState({username: 'Loading...', id: authorid});
 
   useEffect(() => {
-    console.log('why are you not running');
-    console.log(authorid);
     const authorLookup = authorid ? authorid.toString() : '';
     getUser(authorLookup)
     .then(user => {
-      console.log(user);
       setAuthor(user);
     })
   }, [])

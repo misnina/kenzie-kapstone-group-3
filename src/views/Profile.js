@@ -37,7 +37,6 @@ const mockUser = {
 export default function Profile({ user }) {
   const {age, birthday, location, about} = mockUser.profile;
   const bioinfoString = `${age ? `${age} ||` : ''} ${birthday ? `${moment(birthday).format("MMM Do YY")} ||` : ''} ${location ? location : ''}`;
-  console.log(bioinfoString);
 
   return (
     <div id='Profile'>

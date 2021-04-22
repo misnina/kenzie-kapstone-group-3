@@ -6,6 +6,15 @@ import { useStore } from '../store/store';
 
 export default function Menu() {
   const isLoggedIn = useStore(state => state.isLoggedIn);
+  const toggleLogin = useStore(state => state.toggleLogin);
+  const setCurrentUser = useStore(state => state.setCurrentUser);
+
+  function handleLogout() {
+    if (isLoggedIn) {
+      toggleLogin(isLoggedIn);
+      setCurrentUser({username: '', id: ''});
+    }
+  }
 
   return (
     <div id="Menu">
@@ -23,7 +32,7 @@ export default function Menu() {
 
           <Link to="/gaming">Gaming</Link>
         </div>
-        <button>Logout</button>
+        {isLoggedIn ? <button onClick={() => handleLogout()}>Logout</button> : <></>}
       </div>
     </div>
   )

@@ -13,4 +13,7 @@ export const useStore = create(devtools(((set) => ({
 
   currentUser: { username: '', id: ''},
   setCurrentUser: (user) => set({ currentUser: { username: user.username, id: user._id } }),
+
+  errorMessage: '',
+  setErrorMessage: (newMessage) => set({ errorMessage: newMessage }),
 }))));

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import ChatBar from '../components/ChatBar'
 import Message from '../components/Message';
 import { getChannelMessages } from '../fetchRequests';
@@ -10,7 +10,10 @@ import '../styles/Channel.scss';
 
 export default function Channel({ name }) {
   const messages = useStore((state) => state.messages);
-  
+  const isLoggedIn = useStore(state => state.isLoggedIn);
+
+  const moveBottom = useRef(null);
+
   useEffect(() => {
     socket.emit('join-channel', name);
     socket.emit('get-messages', name);
@@ -19,13 +22,19 @@ export default function Channel({ name }) {
     }
   }, [name]);
 
-  //make a message key in backend later
-  console.log(messages);
+  // https://stackoverflow.com/questions/37620694/how-to-scroll-to-bottom-in-react
+  const scrollToBottom = () => {
+    moveBottom.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  socket.on('new-message', (message) => {
+    scrollToBottom()
+  });
+
   return (
     <div className="channel">
       <div className="messages">
-        {messages && messages.map(message => {
-          console.log(message.author);
+        {messages && messages.slice(-30).map((message, i) => {
           return (<Message
           authorid={message.author}
           message={message.text}
@@ -33,7 +42,8 @@ export default function Channel({ name }) {
         />)
         })}
       </div>
-      <ChatBar name={name} />
+      {isLoggedIn ? <ChatBar name={name} /> : ''}
+      <div ref={moveBottom}/>
     </div>
   )
 }

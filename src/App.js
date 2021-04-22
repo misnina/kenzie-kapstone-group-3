@@ -11,6 +11,9 @@ import { SocketContext, socket } from './service/socket.js';
 
 import { useStore } from './store/store.js'
 
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
+
 
 function App() {
 
@@ -22,8 +25,10 @@ function App() {
 
   const setUsers = useStore((state) => state.setUsers);
 
-  const messages = useStore((state) => state.messages);
   const setMessages = useStore((state) => state.setMessages);
+
+  const errorMessage = useStore((state) => state.errorMessage);
+  const setErrorMessage = useStore((state) => state.setErrorMessage);
 
   useEffect(() => {
     socket.on('connect', () => {
@@ -36,16 +41,19 @@ function App() {
     });
 
     socket.on('login', (user) => {
-      console.log(user);
+      if (!user) {
+        setErrorMessage('Not correct username or password');
+        return;
+      }
       setCurrentUser(user);
       if (!isLoggedIn) {
         toggleLogin(isLoggedIn);
       }
-      console.log('afterlogin', currentUser);
     });
 
     socket.on('logout', () => {
-      setCurrentUser({username: ''});
+      console.log('test')
+      setCurrentUser({username: '', id: ''});
       if (isLoggedIn) {
         toggleLogin(isLoggedIn);
       }
@@ -57,9 +65,6 @@ function App() {
     socket.on('add-friend', (users) => setUsers(users));
 
     socket.on('new-message', (messages) => {
-      // const cloneMessages = [...messages];
-      // cloneMessages.push(message);
-      console.log(messages);
       setMessages(messages);
     });
 
@@ -68,7 +73,7 @@ function App() {
     });
 
     socket.on('toast-error', (message) => {
-      console.log(message);
+      setErrorMessage(message);
     })
     return () => {
       socket.off('get-messages');
@@ -78,11 +83,25 @@ function App() {
     }
   }, []);
 
+  const handleClose = () => {
+    setErrorMessage('');
+  }
+
   return (
     <div id="App">
       <Menu />
       <div id="main-area">
         <SocketContext.Provider value={socket}>
+          <Snackbar 
+            open={errorMessage}
+            autoHideDuration={6000}
+            onClose={handleClose}
+          >
+            <Alert onClose={handleClose}>
+              {errorMessage}
+            </Alert>
+          </Snackbar>
+
           <Switch>
 
 
