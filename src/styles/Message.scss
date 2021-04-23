@@ -9,6 +9,7 @@
   background-color: $secondary-theme-color;
   display: flex;
   justify-content: center;
+  word-wrap: break-word;
 
   @include cards;
 }

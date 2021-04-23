@@ -2,8 +2,15 @@ import React, { useState } from 'react'
 import { socket } from '../service/socket';
 import { useStore } from '../store/store';
 
+import { createUser } from '../fetchRequests';
+
 export default function Home() {
-  const currentUser = useStore(state => state.user);
+  const setErrorMessage = useStore(state => state.setErrorMessage);
+  const setCurrentUser = useStore(state => state.setCurrentUser);
+
+  const isLoggedIn = useStore(state => state.isLoggedIn);
+  const toggleLogin = useStore(state => state.toggleLogin);
+  
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -13,19 +20,26 @@ export default function Home() {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    if (!username || !password) return;
+    if (!username || !password) {
+      setErrorMessage('Please enter in username or password');
+      return;
+    };
 
     socket.emit('login', { username: username, password: password });
   }
 
   const handleSignUp = (event) => {
     event.preventDefault();
-    console.log('thing');
-    if (!signUsername || !signPassword) return;
+    if (!signUsername || !signPassword) {
+      setErrorMessage('Please enter in username or password');
+      return;
+    };
 
-
-    socket.emit('new-user', { username: signUsername,
-    password: signPassword });
+    createUser(signUsername, signPassword)
+    .then(user => {
+      setCurrentUser(user);
+      toggleLogin(isLoggedIn);
+    })
   }
 
   return (

@@ -5,3 +5,29 @@ export const getUser = function (authorid) {
   .then(res => {
     return res.json();
 })}
+
+export const patchUser = function (user) {
+  return fetch(baseURL + `user/${user._id.toString()}`, {
+    method: "PATCH",
+    headers: {'Content-Type': 'application/json'},
+    headers: {'Content-Type': 'application/json'},
+  })
+  .then(res => {
+    return res.json();
+  })
+}
+
+export const createUser = function (username, password) {
+  return fetch(baseURL + `users`, {
+    method: "POST",
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      username,
+      password
+    })
+  })
+  .then(res => {
+    console.log(res);
+    return res.json();
+  });
+}

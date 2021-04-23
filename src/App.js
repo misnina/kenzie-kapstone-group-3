@@ -59,14 +59,6 @@ function App() {
       }
     })
 
-    socket.on('new-user', (users) => {
-      setUsers(users);
-      console.log('new user');
-    });
-    socket.on('delete-user', (users) => setUsers(users));
-    socket.on('update-user', (users) => setUsers(users));
-    socket.on('add-friend', (users) => setUsers(users));
-
     socket.on('toast-error', (message) => {
       setErrorMessage(message);
     })

@@ -24,12 +24,10 @@ export default function Message({ message, author }) {
     */
 
     if (author._id) {
-      console.log(message);
       if (author._id === currentUser._id) {
         setAuthor(currentUser);
         return
       } else {
-        console.log(author);
         getUser(author._id.toString())
         .then(user => {
           setAuthor(user);

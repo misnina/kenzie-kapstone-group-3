@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import moment from 'moment';
 import { useStore } from '../store/store';
 
 import Avatar from '../components/Avatar';
 
 import '../styles/Profile.scss';
-import { getUser } from '../fetchRequests';
-import { socket } from '../service/socket';
-
-//profile photo is url for noq
+import { getUser, patchUser } from '../fetchRequests';
 
 const friendPhotoURL01 = 'https://i.imgur.com/AmfgQV1.png';
 const friendPhotoURL02 = 'https://i.imgur.com/6FRVdHg.png';
@@ -19,7 +16,8 @@ const mockUser = {
 
 export default function Profile() {
   const currentUser = useStore(state => state.currentUser);
-  const setCurrentUser = useStore(state => state.currentUser);
+  const setCurrentUser = useStore(state => state.setCurrentUser);
+  const setErrorMessage = useStore(state => state.setErrorMessage);
 
   const [fullUser, setFullUser] = useState({
     username: 'Loading',
@@ -42,11 +40,9 @@ export default function Profile() {
       setBirthday(new Date(user.profile.birthday));
       setLocation(user.profile.location);
       setAbout(user.profile.about);
+      setProfile(user.profile);
     })
   }, [])
-
-  const {age, birthday, location, about} = fullUser.profile || {age: '', birthday: '', location: '', about: ''};
-  const bioinfoString = `${age ? `${age} ||` : ''} ${birthday ? `${moment(birthday).format("MMM Do YY")} ||` : ''} ${location ? location : ''}`;
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -55,24 +51,39 @@ export default function Profile() {
   const [formLocation, setLocation] = useState('');
   const [formAbout, setAbout] = useState('');
 
+  const [profile, setProfile] = useState(fullUser.profile || {age: '', birthday: '', location: '', about: ''})
+  const bioinfoString = `${profile.age ? `${profile.age} yrs ||` : ''} ${profile.birthday ? `${moment(profile.birthday).format("MMM Do YY")} ||` : ''} ${profile.location ? profile.location : ''}`;
+
+  // https://stackoverflow.com/questions/37620694/how-to-scroll-to-bottom-in-react
+  const moveTop = useRef(null);
+  const scrollToTop = () => {
+    moveTop.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
   const handleUpdate = (event) => {
     event.preventDefault();
-    socket.emit('update-user', 
-      {
-        username: username || fullUser.username,
-        password,
-        profile: {
-          age: formAge || fullUser.age,
-          birthday: formBirthday || fullUser.birthday,
-          location: formLocation || fullUser.location,
-          about: formAbout || fullUser.about,
-        }
+    patchUser({
+      _id: fullUser._id,
+      username: username || fullUser.username,
+      password: password || fullUser.password,
+      profile: {
+        age: formAge || fullUser.age,
+        birthday: formBirthday || fullUser.birthday,
+        location: formLocation || fullUser.location,
+        about: formAbout || fullUser.about,
       }
-    )
+    })
+    .then(user => {
+      setCurrentUser(user);
+      setProfile(user.profile);
+      setErrorMessage('User updated!');
+      scrollToTop();
+    })
   }
 
   return (
     <div id='Profile'>
+      <div ref={moveTop}/>
       {isLoaded && 
       <>
       <div className='card profile-card'>
@@ -101,7 +112,7 @@ export default function Profile() {
 
         <div className='about'>
           <h1>about</h1>
-          <p>{about}</p>
+          <p>{profile.about}</p>
         </div>
 
       </div>
