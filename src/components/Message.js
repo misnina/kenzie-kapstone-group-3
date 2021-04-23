@@ -10,14 +10,36 @@ export default function Message({ message, author }) {
     : {username: 'Loading...', id: author});
 
   useEffect(() => {
+    /*
+      When a new message is created, for whatever
+      reason, the newest message sent gets sent back
+      with the full author relationship, while
+      when they are gotten normally they only
+      contain the relationship id. This counts for
+      ANY sockets, so you must first check if the
+      author constains an id, instead of just
+      being an id. Next you need to see if the
+      author is the current user, if not, look
+      up the username of the other user.
+    */
+
     if (author._id) {
-      setAuthor(currentUser);
-      return
+      console.log(message);
+      if (author._id === currentUser._id) {
+        setAuthor(currentUser);
+        return
+      } else {
+        console.log(author);
+        getUser(author._id.toString())
+        .then(user => {
+          setAuthor(user);
+        })
+        return;
+      }
     }
 
     getUser(mAuthor.id.toString())
     .then(user => {
-      console.log(user);
       setAuthor(user);
     })
   }, [])

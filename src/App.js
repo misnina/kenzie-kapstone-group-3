@@ -25,6 +25,7 @@ function App() {
 
   const setUsers = useStore((state) => state.setUsers);
 
+  const messages = useStore(state => state.messages);
   const setMessages = useStore((state) => state.setMessages);
 
   const errorMessage = useStore((state) => state.errorMessage);
@@ -66,24 +67,29 @@ function App() {
     socket.on('update-user', (users) => setUsers(users));
     socket.on('add-friend', (users) => setUsers(users));
 
-    socket.on('new-message', (messages) => {
-      setMessages(messages);
-    });
-
-    socket.on('get-messages', (newMessages) => {
-      setMessages(newMessages);
-    });
-
     socket.on('toast-error', (message) => {
       setErrorMessage(message);
     })
     return () => {
-      socket.off('get-messages');
-      socket.off('new-messages');
       socket.off('login');
       socket.off('logout');
     }
   }, []);
+
+  useEffect(() => {
+    socket.on('new-message', newMessages => {
+      setMessages(newMessages);
+    });
+
+    socket.on('get-messages', newMessages => {
+      setMessages(newMessages);
+    });
+
+    return () => {
+      socket.off('get-messages');
+      socket.off('new-messages');
+    }
+  }, [messages]);
 
   const handleClose = () => {
     setErrorMessage('');
@@ -101,7 +107,6 @@ function App() {
   const logout = () => {
     socket.emit('logout');
   }
-
 
   return (
     <div id="App">

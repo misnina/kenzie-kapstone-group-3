@@ -114,7 +114,7 @@ export default function Profile() {
           <h1>Profile</h1>
           <div className="profile-form">
             Age: <input type="number" value={formAge} onChange={e => setAge(e.target.value)}/>
-            Birthday: <input type="date" value={formBirthday} defaultValue={formBirthday} onChange={e => setBirthday(e.target.value)}/>
+            Birthday: <input type="date"  defaultValue={formBirthday} onChange={e => setBirthday(e.target.value)}/>
             Location: <input value={formLocation} onChange={e => setLocation(e.target.value)}/>
             About <textarea value={formAbout} onChange={e => setAbout(e.target.value)}/>
           </div>

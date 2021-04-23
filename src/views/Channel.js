@@ -31,6 +31,7 @@ export default function Channel({ name }) {
     scrollToBottom()
   });
 
+  console.log(messages);
   return (
     <div className="channel">
       <div className="messages">
