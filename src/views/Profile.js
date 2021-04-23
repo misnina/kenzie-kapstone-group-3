@@ -5,7 +5,7 @@ import { useStore } from '../store/store';
 import Avatar from '../components/Avatar';
 
 import '../styles/Profile.scss';
-import { getUser, patchUser } from '../fetchRequests';
+import { getUser, patchUser, deleteUser } from '../fetchRequests';
 
 const friendPhotoURL01 = 'https://i.imgur.com/AmfgQV1.png';
 const friendPhotoURL02 = 'https://i.imgur.com/6FRVdHg.png';
@@ -18,6 +18,8 @@ export default function Profile() {
   const currentUser = useStore(state => state.currentUser);
   const setCurrentUser = useStore(state => state.setCurrentUser);
   const setErrorMessage = useStore(state => state.setErrorMessage);
+  const isLoggedIn = useStore(state => state.isLoggedIn);
+  const toggleLogin = useStore(state => state.toggleLogin);
 
   const [fullUser, setFullUser] = useState({
     username: 'Loading',
@@ -81,6 +83,25 @@ export default function Profile() {
     })
   }
 
+  const handleDelete = (event) => {
+    event.preventDefault();
+    const decision = window.confirm('Are you sure you want to delete your account?')
+    if (decision) {
+      deleteUser(currentUser._id)
+      .then(status => {
+        if (status === 200) {
+          if (isLoggedIn) {
+            toggleLogin(isLoggedIn);
+          }
+          setCurrentUser({ username: '', _id: ''});
+          setErrorMessage('User Deleted');
+        } else {
+          setErrorMessage('User could not be deleted');
+        }
+      })
+    }
+  }
+
   return (
     <div id='Profile'>
       <div ref={moveTop}/>
@@ -131,6 +152,7 @@ export default function Profile() {
           </div>
           <button type="submit">Update</button>
         </form>
+        <button onClick={handleDelete}>Delete User</button>
       </div>
       </>}
     </div>

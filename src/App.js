@@ -110,7 +110,7 @@ function App() {
             autoHideDuration={6000}
             onClose={handleClose}
           >
-            <Alert onClose={handleClose}>
+            <Alert onClose={handleClose} icon={false}>
               {errorMessage}
             </Alert>
           </Snackbar>

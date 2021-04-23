@@ -27,7 +27,15 @@ export const createUser = function (username, password) {
     })
   })
   .then(res => {
-    console.log(res);
     return res.json();
   });
+}
+
+export const deleteUser = function (userid) {
+  return fetch(baseURL + `user/${userid}`, {
+    method: "DELETE",
+  })
+  .then(res => {
+    return res.status;
+  })
 }

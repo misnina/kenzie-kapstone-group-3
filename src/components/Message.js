@@ -40,6 +40,15 @@ export default function Message({ message, author }) {
     .then(user => {
       setAuthor(user);
     })
+    .catch(err => {
+      if (err) {
+        setAuthor({
+          username: '[Deleted User]',
+          id: '0'
+        });
+        return;
+      }
+    })
   }, [])
 
   return (
