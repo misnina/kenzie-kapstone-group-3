@@ -12,4 +12,16 @@
   word-wrap: break-word;
 
   @include cards;
+
+  .author-bar {
+    color: $primary-theme-color;
+    font-family: Londrina Solid;
+    font-size: 30px;
+    text-align: left;
+  }
+
+  .message-body {
+    font-size: 25px;
+    font-family: poppins;
+  }
 }

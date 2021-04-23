@@ -34,7 +34,7 @@ export default function Channel({ name }) {
   return (
     <div className="channel">
       <div className="messages">
-        {messages && messages.slice(-30).map((message, i) => {
+        {messages && messages.slice(-15).map((message, i) => {
           return (<Message
           author={message.author}
           message={message.text}

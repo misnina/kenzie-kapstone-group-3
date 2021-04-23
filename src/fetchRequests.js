@@ -1,4 +1,4 @@
-const baseURL = 'http://localhost:4000/';
+const baseURL = "https://infinite-beach-71989.herokuapp.com/";
 
 export const getUser = function (authorid) { 
   return fetch(baseURL + `user/${authorid.toString()}`)
@@ -10,7 +10,7 @@ export const patchUser = function (user) {
   return fetch(baseURL + `user/${user._id.toString()}`, {
     method: "PATCH",
     headers: {'Content-Type': 'application/json'},
-    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(user),
   })
   .then(res => {
     return res.json();

@@ -138,21 +138,25 @@ export default function Profile() {
 
       </div>
 
-      <div className="card">
-        <h2>Update Profile</h2>
+      <div className="card update-card">
+        <h1>Update Profile</h1>
         <form onSubmit={handleUpdate}>
           Username: <input value={username} onChange={(e) => setUsername(e.target.value)}/>
-          Password:<input value={password} onChange={(e) => setPassword(e.target.value)}/>
-          <h1>Profile</h1>
+          Password:<input value={password} type="password" onChange={(e) => setPassword(e.target.value)}/>
+          <h2>Profile</h2>
           <div className="profile-form">
-            Age: <input type="number" value={formAge} onChange={e => setAge(e.target.value)}/>
-            Birthday: <input type="date"  defaultValue={formBirthday} onChange={e => setBirthday(e.target.value)}/>
-            Location: <input value={formLocation} onChange={e => setLocation(e.target.value)}/>
-            About <textarea value={formAbout} onChange={e => setAbout(e.target.value)}/>
+            <div className="info-section">
+              <div>Age: <input type="number" value={formAge} onChange={e => setAge(e.target.value)}/></div>
+              <div>Birthday: <input type="date"  defaultValue={formBirthday} onChange={e => setBirthday(e.target.value)}/></div>
+              <div>Location: <input value={formLocation} onChange={e => setLocation(e.target.value)}/></div>
+            </div>
+            <div className="about-section">
+              About <textarea value={formAbout} maxlength="250" onChange={e => setAbout(e.target.value)}/>
+            </div>
           </div>
           <button type="submit">Update</button>
         </form>
-        <button onClick={handleDelete}>Delete User</button>
+          <button className="danger" onClick={handleDelete}>Delete User</button>
       </div>
       </>}
     </div>

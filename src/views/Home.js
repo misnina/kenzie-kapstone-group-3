@@ -4,6 +4,8 @@ import { useStore } from '../store/store';
 
 import { createUser } from '../fetchRequests';
 
+import '../styles/Home.scss';
+
 export default function Home() {
   const setErrorMessage = useStore(state => state.setErrorMessage);
   const setCurrentUser = useStore(state => state.setCurrentUser);
@@ -43,8 +45,9 @@ export default function Home() {
   }
 
   return (
-    <div>
-      <form onSubmit={handleLogin}>
+    <div className="home">
+      <form onSubmit={handleLogin} className='card'>
+        <h2>Login</h2>
         Username: <input 
           value={username}
           onChange={e => setUsername(e.target.value)}
@@ -57,7 +60,7 @@ export default function Home() {
         <button type="submit">Login</button>
       </form>
 
-      <form onSubmit={handleSignUp}>
+      <form onSubmit={handleSignUp} className='card'>
         <h2>Sign Up</h2>
         Username: <input 
           value={signUsername}
