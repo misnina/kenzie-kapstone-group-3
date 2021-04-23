@@ -18,6 +18,7 @@
     font-family: poppins;
     margin-top: auto;
     text-decoration: none;
+    color: $mid-text-color;
   }
 
   .link-list {
@@ -29,5 +30,11 @@
 
    a {
     text-decoration: none;
+    color: $base-text-color;
+    margin-bottom: 5px;
+  }
+
+  h1 {
+    font-size: xxx-large;
   }
 }
