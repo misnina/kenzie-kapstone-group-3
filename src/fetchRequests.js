@@ -1,4 +1,4 @@
-const baseURL = "https://infinite-beach-71989.herokuapp.com/";
+const baseURL = "http://localhost:4000/";
 
 export const getUser = function (authorid) { 
   return fetch(baseURL + `user/${authorid.toString()}`)
