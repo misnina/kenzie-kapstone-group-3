@@ -2,6 +2,9 @@
   "name": "kenzie-kapstone-group-3",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "12.18.4"
+  },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/lab": "^4.0.0-alpha.57",
