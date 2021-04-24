@@ -1,4 +1,4 @@
-const baseURL = "http://dry-spire-38380.herokuapp.com/";
+const baseURL = "http://dry-spire-38380.herokuapp.com";
 
 export const getUser = function (authorid) { 
   return fetch(baseURL + `user/${authorid.toString()}`)
