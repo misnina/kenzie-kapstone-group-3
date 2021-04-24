@@ -1,7 +1,7 @@
 import io from "socket.io-client";
 import React from 'react';
 
-export const socket = io("http://dry-spire-38380.herokuapp.com", {
+export const socket = io("https://dry-spire-38380.herokuapp.com", {
   extraHeaders: {
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
     "Access-Control-Allow-Origin": "http://dry-spire-38380.herokuapp.com",
